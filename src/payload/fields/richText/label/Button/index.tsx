@@ -3,7 +3,7 @@
 import React from 'react'
 import ElementButton from '@payloadcms/richtext-slate/dist/field/elements/Button'
 
-import Icon from '../Icon'
+import Icon from '../../../../../../components/Icon'
 
 const baseClass = 'rich-text-label-button'
 
