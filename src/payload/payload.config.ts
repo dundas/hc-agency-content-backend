@@ -1,6 +1,8 @@
 import { webpackBundler } from '@payloadcms/bundler-webpack'
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { payloadCloud } from '@payloadcms/plugin-cloud'
+import { cloudStorage } from '@payloadcms/plugin-cloud-storage'
+import { s3Adapter } from '@payloadcms/plugin-cloud-storage/s3'
 import nestedDocs from '@payloadcms/plugin-nested-docs'
 import redirects from '@payloadcms/plugin-redirects'
 import seo from '@payloadcms/plugin-seo'
@@ -23,8 +25,6 @@ import { seed } from './endpoints/seed'
 import { Footer } from './globals/Footer'
 import { Header } from './globals/Header'
 import { Settings } from './globals/Settings'
-import { s3Adapter } from '@payloadcms/plugin-cloud-storage/s3';
-import { cloudStorage } from '@payloadcms/plugin-cloud-storage';
 
 const storageAdapter = s3Adapter({
   config: {
@@ -33,7 +33,7 @@ const storageAdapter = s3Adapter({
     credentials: {
       accessKeyId: process.env.S3_ACCESS_KEY,
       secretAccessKey: process.env.S3_SECRET_KEY,
-    }
+    },
   },
   bucket: process.env.S3_BUCKET_NAME,
 })
@@ -80,11 +80,11 @@ export default buildConfig({
       port: '465',
       auth: {
         user: 'aa026f0fca4ebb1f6fee6bf392bfb1c7',
-        pass: 'c87f8ce27a8c0eeda5dc2388c5ffe6b5'
-      }
+        pass: 'c87f8ce27a8c0eeda5dc2388c5ffe6b5',
+      },
     },
     fromName: 'HelloConvo Marketing Agency',
-    fromAddress: 'agency@helloconvo.com'
+    fromAddress: 'agency@helloconvo.com',
   },
   editor: slateEditor({}),
   db: mongooseAdapter({
@@ -124,8 +124,9 @@ export default buildConfig({
     }),
     payloadCloud(),
     cloudStorage({
-      collections: { // Create an object for every upload collection, in this case it's only "media"
-        'media': {
+      collections: {
+        // Create an object for every upload collection, in this case it's only "media"
+        media: {
           adapter: storageAdapter,
         },
       },
